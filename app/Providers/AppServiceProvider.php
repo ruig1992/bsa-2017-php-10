@@ -1,11 +1,13 @@
 <?php
 namespace App\Providers;
 
+use App\Manager\Contract\{
+    CarManager as CarManagerContract,
+    UserManager as UserManagerContract
+};
 use Laravel\Dusk\DuskServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use App\Manager\{UserManager, CarManager};
-use App\Manager\Contract\CarManager as CarManagerContract;
-use App\Manager\Contract\UserManager as UserManagerContract;
 
 /**
  * Class AppServiceProvider

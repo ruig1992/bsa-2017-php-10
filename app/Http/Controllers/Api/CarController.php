@@ -1,11 +1,12 @@
 <?php
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
+use App\Manager\Contract\{
+    CarManager as CarManagerContract,
+    UserManager as UserManagerContract
+};
 use App\Http\Controllers\Controller;
-use App\Manager\Contract\CarManager as CarManagerContract;
-use App\Manager\Contract\UserManager as UserManagerContract;
+use Illuminate\Http\{Request, JsonResponse};
 
 /**
  * Class CarController
@@ -43,12 +44,8 @@ class CarController extends Controller
      */
     public function index()
     {
-        return 'index';
-
-        foreach ($this->carsRepository->getAll() as $car) {
-            $data[] = array_only($car->toArray(), $fields);
-        }
-        return response()->json($data);
+        $cars = $this->carManager->findAll();
+        return response()->json($cars);
     }
 
     /**
@@ -59,11 +56,11 @@ class CarController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        $car = $this->carsRepository->getById($id);
+        $car = $this->carManager->findById($id);
 
         if ($car === null) {
             return response()->json([
-                'message' => "The car with ID #$id not found",
+                'message' => "The car #$id not found",
             ], 404);
         }
         return response()->json($car);

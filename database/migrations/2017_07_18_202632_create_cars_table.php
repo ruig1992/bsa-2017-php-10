@@ -23,7 +23,11 @@ class CreateCarsTable extends Migration
             $table->integer('mileage')->nullable();
             $table->float('price', 8, 2)->nullable();
             $table->integer('user_id')->unsigned()->index()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('CASCADE');
         });
     }
 

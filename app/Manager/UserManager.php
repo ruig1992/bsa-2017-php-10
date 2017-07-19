@@ -3,8 +3,8 @@ namespace App\Manager;
 
 use App\Entity\User;
 use Illuminate\Support\Collection;
-use App\Request\Contract\SaveUserRequest;
-use App\Manager\Contract\UserManager as UserManagerContract;
+use App\Request\Contracts\SaveUserRequest;
+use App\Manager\Contracts\UserManager as UserManagerContract;
 
 /**
  * Class UserManager

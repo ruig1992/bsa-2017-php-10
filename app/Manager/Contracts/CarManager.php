@@ -1,13 +1,13 @@
 <?php
-namespace App\Manager\Contract;
+namespace App\Manager\Contracts;
 
 use App\Entity\Car;
 use Illuminate\Support\Collection;
-use App\Request\Contract\SaveCarRequest;
+use App\Request\Contracts\SaveCarRequest;
 
 /**
  * Interface CarManager
- * @package App\Manager\Contract
+ * @package App\Manager\Contracts
  */
 interface CarManager
 {

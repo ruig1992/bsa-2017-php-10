@@ -28,6 +28,7 @@ class AdminCarController extends CarController
             'registration_number',
             'color',
             'price',
+            'user_id',
         ]);
         $car = new Car($storeData);
         $newData = $this->carsRepository->store($car);

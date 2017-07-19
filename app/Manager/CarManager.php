@@ -3,8 +3,8 @@ namespace App\Manager;
 
 use App\Entity\Car;
 use Illuminate\Support\Collection;
-use App\Request\Contract\SaveCarRequest;
-use App\Manager\Contract\CarManager as CarManagerContract;
+use App\Request\Contracts\SaveCarRequest;
+use App\Manager\Contracts\CarManager as CarManagerContract;
 
 /**
  * Class CarManager

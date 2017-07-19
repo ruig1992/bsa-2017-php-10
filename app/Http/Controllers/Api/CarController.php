@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Api;
 
-use App\Manager\Contract\{
+use App\Manager\Contracts\{
     CarManager as CarManagerContract,
     UserManager as UserManagerContract
 };

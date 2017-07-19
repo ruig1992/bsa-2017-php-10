@@ -1,12 +1,12 @@
 <?php
-namespace App\Request\Contract;
+namespace App\Request\Contracts;
 
 use App\Entity\Car;
 use App\Entity\User;
 
 /**
  * Interface SaveCarRequest
- * @package App\Request\Contract
+ * @package App\Request\Contracts
  */
 interface SaveCarRequest
 {

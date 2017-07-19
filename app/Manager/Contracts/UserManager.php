@@ -1,13 +1,13 @@
 <?php
-namespace App\Manager\Contract;
+namespace App\Manager\Contracts;
 
 use App\Entity\User;
 use Illuminate\Support\Collection;
-use App\Request\Contract\SaveUserRequest;
+use App\Request\Contracts\SaveUserRequest;
 
 /**
  * Interface UserManager
- * @package App\Manager\Contract
+ * @package App\Manager\Contracts
  */
 interface UserManager
 {

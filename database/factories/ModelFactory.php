@@ -18,6 +18,7 @@ $factory->define(App\Entity\User::class, function (Faker\Generator $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
+        'is_active' => $faker->boolean,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
@@ -33,6 +34,6 @@ $factory->define(App\Entity\Car::class, function (Faker\Generator $faker) {
         'year' => $faker->year,
         'mileage' => $faker->randomDigit,
         'price' => $faker->randomDigit,
-        'user_id' => 1,
+        //'user_id' => 1,
     ];
 });

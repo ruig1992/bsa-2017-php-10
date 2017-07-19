@@ -13,4 +13,6 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('app.index');
+
+Route::resource('cars', 'CarController');

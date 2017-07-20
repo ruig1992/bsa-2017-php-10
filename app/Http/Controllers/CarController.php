@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Entity\Car;
+use Illuminate\Http\Request;
 use App\Http\Requests\ValidatedCar;
 
 use App\Manager\Contracts\{
@@ -34,16 +35,10 @@ class CarController extends Controller
     ) {
         $this->userManager = $userManager;
         $this->carManager = $carManager;
-
-        /**
-         * Assign the middleware for the controller's actions
-         * to check the existence of the car in the repository
-         */
-        $this->middleware('car.exists')->only(['show', 'edit', 'update']);
     }
 
     /**
-     * Get and show the list of all cars
+     * Gets and displays the list of all cars.
      *
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
@@ -67,7 +62,7 @@ class CarController extends Controller
     }
 
     /**
-     * Stores a newly created car in the repository.
+     * Stores a newly created car.
      *
      * @param \App\Http\Requests\ValidatedCar $request
      *    Contains the rules for validating the car data from request
@@ -122,7 +117,7 @@ class CarController extends Controller
     }
 
     /**
-     * Updates the specified car by its id in the repository.
+     * Updates the specified car by its id.
      *
      * @param  \App\Http\Requests\ValidatedCar $request
      *    Contains the rules for validating the car data from request
@@ -151,4 +146,20 @@ class CarController extends Controller
 
         return redirect()->route('cars.show', ['id' => $car->id]);
     }
+
+    /**
+     * Deletes the specified car by its id.
+     *
+     * @param  \App\Entity\Car $car
+     *
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
+    /*public function destroy(Car $car)
+    {
+        dd($car);
+
+        //$car = $this->carsRepository->update($car);
+
+        return redirect()->route('cars.show', ['id' => $car->id]);
+    }*/
 }

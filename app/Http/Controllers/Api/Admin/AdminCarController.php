@@ -2,9 +2,12 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Entity\Car;
+
+use App\Http\Requests\StoreCar;
+use App\Http\Requests\UpdateCarFields;
+
 use App\Http\Controllers\Api\CarController;
 use Illuminate\Http\{Request, JsonResponse};
-
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -14,75 +17,71 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminCarController extends CarController
 {
     /**
-     * Store a newly created car in the repository
+     * Store a newly created car.
      *
-     * @param  Request $request
-     * @return JsonResponse
+     * @param \App\Http\Requests\StoreCar $request
+     *    Contains the rules for validating the car data from request
+     *
+     * @return void
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreCar $request): void //JsonResponse
     {
-        $storeData = $request->only([
+        $data = $request->only([
             'model',
-            'year',
-            'mileage',
             'registration_number',
+            'year',
             'color',
+            'mileage',
             'price',
             'user_id',
         ]);
-        $car = new Car($storeData);
-        $newData = $this->carsRepository->store($car);
 
-        return response()->json($newData);
+        $car = new Car($data);
+        $car->save();
+        //$this->carsRepository->store($car);
+        //$cars = $this->carManager->findAll();
+
+        //return response()->json($cars);
     }
 
     /**
-     * Update the specified car in the repository
+     * Updates the specified car by its id.
      *
-     * @param  Request $request
+     * @param  \App\Entity\Car $car
      * @return JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateCarFields $request, Car $car): JsonResponse
     {
-        $storeData = $request->only([
+        $data = $request->only([
             'model',
-            'year',
-            'mileage',
             'registration_number',
+            'year',
             'color',
+            'mileage',
             'price',
+            'user_id',
         ]);
 
-        $car = $this->carsRepository->getById($id);
-        if ($car === null) {
-            return response()->json([
-                'message' => "The car with ID #$id not found",
-            ], 404);
+        foreach ($data as $field => $value) {
+            if ($value !== null) {
+                $car->$field = $value;
+            }
         }
+        $car->save();
 
-        $car->fromArray($storeData);
-        $data = $this->carsRepository->update($car);
+        //$car = $this->carsRepository->update($car);
 
-        return response()->json($data);
+        return response()->json($car);
     }
 
     /**
-     * Remove the specified car from the repository
+     * Deletes the specified car by its id.
      *
-     * @param  int $id
-     * @return Response
+     * @param  \App\Entity\Car $car
+     * @return void
      */
-    public function destroy(int $id): Response
+    public function destroy(Car $car): void
     {
-        $car = $this->carsRepository->getById($id);
-        if ($car === null) {
-            return response()->json([
-                'message' => "The car with ID #$id doesn't exist",
-            ], 404);
-        }
-
-        $this->carsRepository->delete($id);
-
-        return response('Ok', 200);
+        $car->delete();
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Api;
 
+use App\Entity\Car;
 use App\Manager\Contracts\{
     CarManager as CarManagerContract,
     UserManager as UserManagerContract
@@ -15,12 +16,10 @@ use Illuminate\Http\{Request, JsonResponse};
 class CarController extends Controller
 {
     /**
-     * User Manager
      * @var \App\Manager\Contract\UserManager
      */
     protected $userManager;
     /**
-     * Car Manager
      * @var \App\Manager\Contract\CarManager
      */
     protected $carManager;
@@ -38,31 +37,27 @@ class CarController extends Controller
     }
 
     /**
-     * Get and show the list of all cars
+     * Gets and displays the list of all cars.
      *
      * @return JsonResponse
      */
     public function index()
     {
         $cars = $this->carManager->findAll();
+
         return response()->json($cars);
     }
 
     /**
-     * Get and show the full information about the car by its id
+     * Gets and displays the full information about the car by its id.
      *
-     * @param int $id
+     * @param  \App\Entity\Car $car
      * @return JsonResponse
      */
-    public function show(int $id): JsonResponse
+    public function show(Car $car): JsonResponse
     {
-        $car = $this->carManager->findById($id);
+        //$car->user;
 
-        if ($car === null) {
-            return response()->json([
-                'message' => "The car #$id not found",
-            ], 404);
-        }
         return response()->json($car);
     }
 }

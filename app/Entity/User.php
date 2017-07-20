@@ -11,12 +11,6 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableInterface;
 class User extends Authenticatable implements AuthenticatableInterface
 {
     /**
-     * Indicates if the model should be timestamped.
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
      * The attributes that are mass assignable.
      * @var array
      */

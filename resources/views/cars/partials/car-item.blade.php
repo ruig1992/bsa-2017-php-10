@@ -36,7 +36,7 @@
         class="btn btn-success edit-button">
           <i class="fa fa-pencil-square-o fa-lg mr-1" aria-hidden="true"></i> Edit</a>
 
-      <a href="{{ route('cars.index') }}" class="btn btn-danger delete-button">
+      <a href="{{ route('cars.destroy', ['id' => $car['id']]) }}" class="btn btn-danger delete-button">
         <i class="fa fa-trash-o fa-lg mr-1"></i> Delete</a>
     </div>
   @endif

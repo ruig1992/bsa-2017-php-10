@@ -47,7 +47,7 @@ class User extends Authenticatable implements AuthenticatableInterface
      */
     protected $casts = [
         'is_active' => 'boolean',
-        'is_admin' => 'boolean',
+        //'is_admin' => 'boolean',
     ];
 
     /**

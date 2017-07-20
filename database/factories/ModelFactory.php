@@ -22,15 +22,15 @@ $factory->define(App\Entity\User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
-        'is_admin' => false,
+        //'is_admin' => false,
     ];
 });
 
 $factory->define(App\Entity\Car::class, function (Faker\Generator $faker) {
     return [
         'color' => $faker->colorName,
-        'model' => $faker->name,
-        'registration_number' => str_random(6),
+        'model' => $faker->company,
+        'registration_number' => strtoupper(str_random(6)),
         'year' => $faker->year,
         'mileage' => $faker->randomDigit,
         'price' => $faker->randomDigit,

@@ -15,14 +15,21 @@ Route::get('/', function () {
     return view('welcome');
 })->name('app.index');
 
-Route::get('cars', 'CarController@index')->name('cars.index');
-Route::get('cars/create', 'CarController@create')->name('cars.create');
-Route::get('cars/edit/{id}', 'CarController@edit')->name('cars.edit');
+/*Route::prefix('cars')->group(function () {
+    Route::get('/', 'CarController@index')->name('cars.index');
+    Route::get('/{car}', 'CarController@show')->name('cars.show');
 
-Route::get('cars/{id}', 'CarController@show')->name('cars.show');
+    Route::get('/create', 'CarController@create')->name('cars.create');
+    Route::post('/', 'CarController@store')->name('cars.store');
 
-Route::post('cars', 'CarController@store')->name('cars.store');
-Route::put('cars', 'CarController@update')->name('cars.update');
-Route::delete('cars', 'CarController@delete')->name('cars.delete');
+    Route::get('/{car}/edit', 'CarController@edit')->name('cars.edit');
+    Route::patch('/{car}', 'CarController@update')->name('cars.update');
 
-//Route::resource('cars', 'CarController');
+    //Route::delete('/{car}', 'CarController@destroy')->name('cars.destroy');
+});*/
+
+Route::resource('cars', 'CarController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

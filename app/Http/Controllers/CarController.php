@@ -64,7 +64,7 @@ class CarController extends Controller
     {
         $users = $this->userManager->findAll();
 
-        return view('cars.create', ['users' => $users->toArray()]);
+        return view('cars.create', ['users' => $users]);
     }
 
     /**
@@ -115,7 +115,7 @@ class CarController extends Controller
 
         return view('cars.edit', [
             'car' => $car->toArray(),
-            'users' => $users->toArray(),
+            'users' => $users,
         ]);
     }
 

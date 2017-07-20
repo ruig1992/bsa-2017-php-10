@@ -12,14 +12,12 @@ class User extends Authenticatable implements AuthenticatableInterface
 {
     /**
      * Indicates if the model should be timestamped.
-     *
      * @var bool
      */
     public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
@@ -33,7 +31,6 @@ class User extends Authenticatable implements AuthenticatableInterface
 
     /**
      * The attributes that should be hidden.
-     *
      * @var array
      */
     protected $hidden = [
@@ -42,13 +39,21 @@ class User extends Authenticatable implements AuthenticatableInterface
 
     /**
      * The attributes that should be cast to native types.
-     *
      * @var array
      */
     protected $casts = [
         'is_active' => 'boolean',
         //'is_admin' => 'boolean',
     ];
+
+    /**
+     * Get the full name of the user.
+     * @return string
+     */
+    public function getFullNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
 
     /**
      * Get the cars for the user.

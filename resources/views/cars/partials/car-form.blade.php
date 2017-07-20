@@ -90,10 +90,9 @@
           <option>__ select the user __</option>
 
         @foreach ($users as $user)
-          <option value="{{ $user['id'] }}"
-            @if (old('user_id', $car['user_id'] ?? null) === $user['id']) selected @endif>
-
-            {{ $user['first_name'] }} {{ $user['last_name'] }}
+          <option value="{{ $user->id }}"
+            @if (old('user_id', $car['user_id'] ?? null) === $user->id) selected @endif>
+            {{ $user->full_name }}
           </option>
         @endforeach
       </select>

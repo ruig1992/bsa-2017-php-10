@@ -3,7 +3,6 @@ namespace App\Http\Controllers;
 
 use App\Entity\Car;
 use App\Http\Requests\ValidatedCar;
-use App\Repositories\Contracts\CarRepositoryInterface;
 
 use App\Manager\Contracts\{
     CarManager as CarManagerContract,
@@ -82,14 +81,17 @@ class CarController extends Controller
             'registration_number',
             'year',
             'color',
+            'mileage',
             'price',
+            'user_id',
         ]);
 
         $car = new Car($data);
-        $this->carsRepository->store($car);
-        $updatedCars = $this->carsRepository->getAll();
+        $car->save();
+        //$this->carsRepository->store($car);
+        $cars = $this->carManager->findAll();
 
-        return view('cars.index', ['cars' => $updatedCars->toArray()]);
+        return redirect()->route('cars.index');
     }
 
     /**
@@ -135,12 +137,18 @@ class CarController extends Controller
             'registration_number',
             'year',
             'color',
+            'mileage',
             'price',
+            'user_id',
         ]);
 
-        $car->fromArray($data);
-        $car = $this->carsRepository->update($car);
+        foreach ($data as $field => $value) {
+            $car->$field = $value;
+        }
+        $car->save();
 
-        return view('cars.show', ['car' => $car->toArray()]);
+        //$car = $this->carsRepository->update($car);
+
+        return redirect()->route('cars.show', ['id' => $car->id]);
     }
 }

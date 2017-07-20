@@ -21,4 +21,8 @@ Route::get('cars/edit/{id}', 'CarController@edit')->name('cars.edit');
 
 Route::get('cars/{id}', 'CarController@show')->name('cars.show');
 
+Route::post('cars', 'CarController@store')->name('cars.store');
+Route::put('cars', 'CarController@update')->name('cars.update');
+Route::delete('cars', 'CarController@delete')->name('cars.delete');
+
 //Route::resource('cars', 'CarController');

@@ -66,6 +66,20 @@
     </div>
   </div>
 
+  <div class="form-group row{{ $errors->has('mileage') ? ' has-danger' : '' }}">
+    <label for="mileage" class="form-control-label col-md-3 col-form-label">Mileage</label>
+
+    <div class="col col-lg-8">
+      <input id="mileage" type="text" class="form-control {{ $errors->has('mileage') ?
+        ' form-control-danger' : '' }}" name="mileage"
+        value="{{ old('mileage', $car['mileage'] ?? null) }}">
+
+      @if ($errors->has('mileage'))
+        <div class="form-control-feedback">{{ $errors->first('mileage') }}</div>
+      @endif
+    </div>
+  </div>
+
   <div class="form-group row{{ $errors->has('price') ? ' has-danger' : '' }}">
     <label for="price" class="form-control-label col-md-3 col-form-label">Price</label>
 
@@ -91,7 +105,7 @@
 
         @foreach ($users as $user)
           <option value="{{ $user->id }}"
-            @if (old('user_id', $car['user_id'] ?? null) === $user->id) selected @endif>
+            @if (old('user_id', $car['user_id'] ?? null) == $user->id) selected @endif>
             {{ $user->full_name }}
           </option>
         @endforeach

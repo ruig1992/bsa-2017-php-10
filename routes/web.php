@@ -15,4 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('app.index');
 
-Route::resource('cars', 'CarController');
+Route::get('cars', 'CarController@index')->name('cars.index');
+Route::get('cars/create', 'CarController@create')->name('cars.create');
+Route::get('cars/edit/{id}', 'CarController@edit')->name('cars.edit');
+
+Route::get('cars/{id}', 'CarController@show')->name('cars.show');
+
+//Route::resource('cars', 'CarController');

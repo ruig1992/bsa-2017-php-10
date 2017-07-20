@@ -2,7 +2,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Entities\Car;
+use App\Entity\Car;
 use Illuminate\Http\Request;
 use App\Manager\Contracts\CarManager as CarManagerContract;
 
@@ -34,8 +34,7 @@ class CheckCarExists
      */
     public function handle(Request $request, Closure $next)
     {
-        $id = $request->car;
-
+        $id = $request->id;
         $validator = validator(
             ['id' => $id],
             ['id' => 'required|integer|min:1']

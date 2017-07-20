@@ -1,9 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Entities\Car;
+use App\Entity\Car;
 use App\Http\Requests\ValidatedCar;
 use App\Repositories\Contracts\CarRepositoryInterface;
+
+use App\Manager\Contracts\{
+    CarManager as CarManagerContract,
+    UserManager as UserManagerContract
+};
 
 /**
  * Class CarController
@@ -12,16 +17,25 @@ use App\Repositories\Contracts\CarRepositoryInterface;
 class CarController extends Controller
 {
     /**
-     * @var \App\Repositories\Contracts\CarRepositoryInterface
+     * @var \App\Manager\Contract\UserManager
      */
-    protected $carsRepository;
+    protected $userManager;
+    /**
+     * @var \App\Manager\Contract\CarManager
+     */
+    protected $carManager;
 
     /**
-     * @param \App\Repositories\Contracts\CarRepositoryInterface $carsRepository
+     * @param \App\Manager\Contract\UserManager $userManager
+     * @param \App\Manager\Contract\CarManager $carManager
      */
-    public function __construct(CarRepositoryInterface $carsRepository)
-    {
-        $this->carsRepository = $carsRepository;
+    public function __construct(
+        UserManagerContract $userManager,
+        CarManagerContract $carManager
+    ) {
+        $this->userManager = $userManager;
+        $this->carManager = $carManager;
+
         /**
          * Assign the middleware for the controller's actions
          * to check the existence of the car in the repository
@@ -30,15 +44,15 @@ class CarController extends Controller
     }
 
     /**
-     * Gets and displays the list of all cars from the repository.
+     * Get and show the list of all cars
      *
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     public function index()
     {
-        $cars = $this->carsRepository->getAll();
+        $cars = $this->carManager->findAll();
 
-        return view('cars.index', ['cars' => $cars->toArray()]);
+        return view('cars.index', ['cars' => $cars]);
     }
 
     /**
@@ -79,7 +93,7 @@ class CarController extends Controller
     /**
      * Gets and displays the full information about the car by its id.
      *
-     * @param  \App\Entities\Car $car
+     * @param  \App\Entity\Car $car
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     public function show(Car $car)
@@ -90,7 +104,7 @@ class CarController extends Controller
     /**
      * Shows the form for editing the specified car by its id.
      *
-     * @param  \App\Entities\Car $car
+     * @param  \App\Entity\Car $car
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     public function edit(Car $car)
@@ -103,7 +117,7 @@ class CarController extends Controller
      *
      * @param  \App\Http\Requests\ValidatedCar $request
      *    Contains the rules for validating the car data from request
-     * @param  \App\Entities\Car $car
+     * @param  \App\Entity\Car $car
      *
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */

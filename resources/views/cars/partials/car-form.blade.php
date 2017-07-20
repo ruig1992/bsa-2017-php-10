@@ -2,7 +2,7 @@
 
   @isset ($method)
     @if (in_array(trim($method), ['PUT', 'PATCH', 'DELETE'], true))
-      <input name="_method" type="hidden" value="{{ $method }}">
+      {{ method_field($method) }}
     @endif
   @endisset
 

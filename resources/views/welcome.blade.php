@@ -6,7 +6,7 @@
 @section('content')
   <article>
     @component('components.page-header')
-      @slot('header') Main page @endslot
+      @slot('header') Best Car Hire Deals @endslot
       @slot('icon') fa-home @endslot
     @endcomponent
 

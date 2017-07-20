@@ -52,7 +52,7 @@ class CarController extends Controller
     {
         $cars = $this->carManager->findAll();
 
-        return view('cars.index', ['cars' => $cars]);
+        return view('cars.index', ['cars' => $cars->toArray()]);
     }
 
     /**
@@ -62,7 +62,9 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('cars.create');
+        $users = $this->userManager->findAll();
+
+        return view('cars.create', ['users' => $users->toArray()]);
     }
 
     /**
@@ -109,7 +111,12 @@ class CarController extends Controller
      */
     public function edit(Car $car)
     {
-        return view('cars.edit', ['car' => $car->toArray()]);
+        $users = $this->userManager->findAll();
+
+        return view('cars.edit', [
+            'car' => $car->toArray(),
+            'users' => $users->toArray(),
+        ]);
     }
 
     /**

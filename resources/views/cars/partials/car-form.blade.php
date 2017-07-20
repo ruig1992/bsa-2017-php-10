@@ -80,6 +80,30 @@
     </div>
   </div>
 
+  <div class="form-group row{{ $errors->has('user_id') ? ' has-danger' : '' }}">
+    <label for="user_id" class="form-control-label col-md-3 col-form-label">User</label>
+
+    <div class="col col-lg-8">
+      <select id="user_id" class="form-control{{ $errors->has('user_id') ?
+        ' form-control-danger' : '' }}" name="user_id">
+
+          <option>__ select the user __</option>
+
+        @foreach ($users as $user)
+          <option value="{{ $user['id'] }}"
+            @if (old('user_id', $car['user_id'] ?? null) === $user['id']) selected @endif>
+
+            {{ $user['first_name'] }} {{ $user['last_name'] }}
+          </option>
+        @endforeach
+      </select>
+
+      @if ($errors->has('user_id'))
+        <div class="form-control-feedback">{{ $errors->first('user_id') }}</div>
+      @endif
+    </div>
+  </div>
+
   <div class="form-group mt-4">
     <button type="submit" class="btn btn-primary">
       <i class="fa fa-floppy-o fa-lg mr-1" aria-hidden="true"></i> Save</button>

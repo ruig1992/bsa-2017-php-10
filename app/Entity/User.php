@@ -20,10 +20,10 @@ class User extends Authenticatable implements AuthenticatableInterface
     protected $fillable = [
         'first_name',
         'last_name',
-        'is_active',
-        'name',
         'email',
         'password',
+        'is_active',
+        'is_admin',
     ];
 
     /**
@@ -40,7 +40,7 @@ class User extends Authenticatable implements AuthenticatableInterface
      */
     protected $casts = [
         'is_active' => 'boolean',
-        //'is_admin' => 'boolean',
+        'is_admin' => 'boolean',
     ];
 
     /**

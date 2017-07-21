@@ -23,7 +23,6 @@ class User extends Authenticatable implements AuthenticatableInterface
         'email',
         'password',
         'is_active',
-        'is_admin',
     ];
 
     /**

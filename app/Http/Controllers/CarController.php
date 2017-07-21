@@ -11,6 +11,7 @@ use App\Manager\Contracts\{
 };
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class CarController
@@ -39,7 +40,10 @@ class CarController extends Controller
         $this->carManager = $carManager;
 
         $this->middleware('auth');
-        $this->middleware('car.available')->only(['show', 'edit', 'update']);
+
+        $this->middleware('can:cars.create')->only(['create', 'store']);
+        $this->middleware('can:cars.update,car')->only(['edit', 'update']);
+        $this->middleware('can:cars.delete,car')->only(['destroy']);
     }
 
     /**
@@ -49,8 +53,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        //$cars = $this->carManager->findAll();
-        $cars = Auth::user()->cars;
+        $cars = $this->carManager->findAll();
 
         return view('cars.index', ['cars' => $cars->toArray()]);
     }
@@ -103,7 +106,10 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        return view('cars.show', ['car' => $car->toArray()]);
+        $data = $car->toArray();
+        $data['user'] = $car->user;
+
+        return view('cars.show', ['car' => $data]);
     }
 
     /**
@@ -160,12 +166,11 @@ class CarController extends Controller
      *
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    /*public function destroy(Car $car)
+    public function destroy(Car $car)
     {
-        dd($car);
-
+        $car->delete();
         //$car = $this->carsRepository->update($car);
 
-        return redirect()->route('cars.show', ['id' => $car->id]);
-    }*/
+        return redirect()->route('cars.index');
+    }
 }

@@ -46,13 +46,15 @@
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav mr-auto">
             @if (!Auth::guest())
-            <li class="nav-item {{ isActiveRoute('cars.index') }}">
-              <a class="nav-link" href="{{ route('cars.index') }}">Cars list</a>
-            </li>
+              <li class="nav-item {{ isActiveRoute('cars.index') }}">
+                <a class="nav-link" href="{{ route('cars.index') }}">Cars list</a>
+              </li>
 
-            <li class="nav-item {{ isActiveRoute('cars.create') }}">
-              <a class="nav-link" href="{{ route('cars.create') }}">Add</a>
-            </li>
+              @can('cars.create')
+              <li class="nav-item {{ isActiveRoute('cars.create') }}">
+                <a class="nav-link" href="{{ route('cars.create') }}">Add</a>
+              </li>
+              @endcan
             @endif
           </ul>
 

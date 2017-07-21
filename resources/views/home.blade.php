@@ -10,6 +10,13 @@
       @slot('icon') fa-home @endslot
     @endcomponent
 
+    @if (session('error'))
+      @component('components.alert')
+        @slot('errorCode') 403 @endslot
+        {{ session('error') }}
+      @endcomponent
+    @endif
+
     <p class="text-center">
       <img src="{{ url('images/main.jpg') }}" alt="Main image">
     </p>

@@ -48,13 +48,19 @@ class Handler extends ExceptionHandler
 
             if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {
                 return response()->json([
-                    'error' => 'Unauthorized.',
+                    'error' => $exception->getMessage(),
                 ], 403);
             }
 
             if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
                 return response(null, 404);
             }
+        }
+
+        if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {
+            return redirect()
+                ->route('app.index')
+                ->with('error', $exception->getMessage());
         }
 
         if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {

@@ -25,7 +25,7 @@
       integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
       crossorigin="anonymous">
 
-    <style>.btn:focus{background-color:transparent}.btn-primary:focus{color:#0275d8}a.btn-success:focus{color:#5cb85c}a.btn-danger:focus{color:#d9534f}.navbar-brand{font-weight:500}.cars-cards{margin-top:-1rem}.car-field{font-weight:600}.form-control-feedback{font-size:.9em}
+    <style>.noselect{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.btn:focus{background-color:transparent}.btn-primary:focus{color:#0275d8}a.btn-success:focus{color:#5cb85c}a.btn-danger:focus{color:#d9534f}.navbar-brand{font-weight:500}.cars-cards{margin-top:-1rem}.car-field{font-weight:600}.form-control-feedback{font-size:.9em}
     </style>
   </head>
 

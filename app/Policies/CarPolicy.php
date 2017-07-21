@@ -17,12 +17,11 @@ class CarPolicy
      * Determine whether the user can view the car.
      *
      * @param  \App\Entity\User $user
-     * @param  \App\Entity\Car  $car
      * @return bool
      */
-    public function view(User $user, Car $car): bool
+    public function view(User $user): bool
     {
-        // method body
+        return $this->isAdminUser($user);
     }
 
     /**

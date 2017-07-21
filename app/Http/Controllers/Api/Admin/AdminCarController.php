@@ -42,6 +42,10 @@ class AdminCarController extends Controller
         $this->carManager = $carManager;
 
         $this->middleware('auth:api');
+        $this->middleware('can:cars.view')->only(['index', 'show']);
+        $this->middleware('can:cars.create')->only(['store']);
+        $this->middleware('can:cars.update,car')->only(['update']);
+        $this->middleware('can:cars.delete,car')->only(['destroy']);
     }
 
     /**

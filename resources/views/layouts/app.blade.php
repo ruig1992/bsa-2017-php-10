@@ -45,11 +45,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item @if (request()->url() === route('cars.index')) active @endif">
+            <li class="nav-item {{ isActiveRoute('cars.index') }}">
               <a class="nav-link" href="{{ route('cars.index') }}">Cars list</a>
             </li>
 
-            <li class="nav-item @if (request()->url() === route('cars.create')) active @endif">
+            <li class="nav-item {{ isActiveRoute('cars.create') }}">
               <a class="nav-link" href="{{ route('cars.create') }}">Add</a>
             </li>
           </ul>
@@ -58,11 +58,11 @@
           <ul class="nav navbar-nav navbar-right">
             <!-- Authentication Links -->
             @if (Auth::guest())
-            <li class="nav-item">
+            <li class="nav-item {{ isActiveRoute('login') }}">
               <a class="nav-link" href="{{ route('login') }}">Login</a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {{ isActiveRoute('register') }}">
               <a class="nav-link" href="{{ route('register') }}">Register</a>
             </li>
 

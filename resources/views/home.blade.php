@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+@section('title', 'Main page')
+@section('meta-description', 'Main page. BSA Task 7')
 
-                <div class="panel-body">
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@section('content')
+  <article>
+    @component('components.page-header')
+      @slot('header') Best Car Hire Deals @endslot
+      @slot('icon') fa-home @endslot
+    @endcomponent
+
+    <p class="text-center">
+      <img src="{{ url('images/main.jpg') }}" alt="Main image">
+    </p>
+  </article>
 @endsection

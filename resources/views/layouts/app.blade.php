@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') - {{ config('app.name', 'BSA Task #7') }}</title>
+    <title>@yield('title') - {{ config('app.name', 'Car Hire Deals') }}</title>
     <meta name="description" content="@yield('meta-description')">
 
     <!-- Styles -->
@@ -40,7 +40,7 @@
 
         <!-- Branding Image -->
         <a href="{{ route('app.index') }}" class="navbar-brand mb-0">
-          {{ config('app.name', 'BSA Task #7') }}</a>
+          {{ config('app.name', 'Car Hire Deals') }}</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->

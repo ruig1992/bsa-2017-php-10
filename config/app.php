@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Laravelista\Ekko\EkkoServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
     ],
 
     /*
@@ -228,6 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Ekko' => Laravelista\Ekko\Facades\Ekko::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];

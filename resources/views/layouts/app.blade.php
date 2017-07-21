@@ -71,15 +71,15 @@
             @else
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ Auth::user()->name }}
+                {{ Auth::user()->full_name }}
                 {{-- <span class="caret"></span> --}}
               </a>
 
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                 <li>
                   <a class="dropdown-item" href="{{ route('logout') }}"
                     onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                    Logout</a>
+                    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
 
                   <form id="logout-form" action="{{ route('logout') }}"
                     method="POST" style="display:none">{{ csrf_field() }}</form>

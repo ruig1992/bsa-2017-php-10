@@ -10,6 +10,8 @@ use App\Manager\Contracts\{
     UserManager as UserManagerContract
 };
 
+use Illuminate\Support\Facades\Auth;
+
 /**
  * Class CarController
  * @package App\Http\Controllers
@@ -37,6 +39,7 @@ class CarController extends Controller
         $this->carManager = $carManager;
 
         $this->middleware('auth');
+        $this->middleware('car.available')->only(['show', 'edit', 'update']);
     }
 
     /**
@@ -46,7 +49,8 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = $this->carManager->findAll();
+        //$cars = $this->carManager->findAll();
+        $cars = Auth::user()->cars;
 
         return view('cars.index', ['cars' => $cars->toArray()]);
     }

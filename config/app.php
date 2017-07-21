@@ -180,6 +180,7 @@ return [
         Laravelista\Ekko\EkkoServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+        Spatie\Fractal\FractalServiceProvider::class,
     ],
 
     /*
@@ -231,6 +232,7 @@ return [
 
         'Ekko' => Laravelista\Ekko\Facades\Ekko::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Fractal' => Spatie\Fractal\FractalFacade::class,
     ],
 
 ];

@@ -68,9 +68,13 @@ class AdminCarController extends Controller
      */
     public function show(Car $car): JsonResponse
     {
-        //$car->user;
+        $data = fractal()
+            ->item($car)
+            ->parseIncludes(['user'])
+            ->transformWith(new CarTransformer())
+            ->toArray();
 
-        return response()->json($car);
+        return response()->json($data);
     }
 
     /**

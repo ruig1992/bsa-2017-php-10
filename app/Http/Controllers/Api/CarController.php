@@ -9,6 +9,8 @@ use App\Manager\Contracts\{
 use App\Http\Controllers\Controller;
 use Illuminate\Http\{Request, JsonResponse};
 
+use App\Transformers\CarTransformer;
+
 /**
  * Class CarController
  * @package App\Http\Controllers\Api
@@ -39,15 +41,20 @@ class CarController extends Controller
     }
 
     /**
-     * Gets and displays the list of all cars.
+     * Gets and displays the list of all cars with certain data fields.
      *
      * @return JsonResponse
      */
     public function index()
     {
-        $cars = $this->carManager->findAll();
+        $fields = ['id', 'model', 'year', 'color', 'price',];
+        $data = [];
 
-        return response()->json($cars);
+        foreach ($this->carManager->findAll() as $car) {
+            $data[] = array_only($car->toArray(), $fields);
+        }
+
+        return response()->json($data);
     }
 
     /**
@@ -58,8 +65,12 @@ class CarController extends Controller
      */
     public function show(Car $car): JsonResponse
     {
-        //$car->user;
+        $data = fractal()
+            ->item($car)
+            ->parseIncludes(['user'])
+            ->transformWith(new CarTransformer())
+            ->toArray();
 
-        return response()->json($car);
+        return response()->json($data);
     }
 }

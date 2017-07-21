@@ -62,7 +62,10 @@ class Task3AuthorizationPagesTest extends DuskTestCase
         $this->createUser();
 
         $this->actingAs($this->user)
-            ->delete('/cars/1')
+            ->withSession(['X-CSRF-TOKEN' => csrf_token()])
+            ->delete('/cars/1', [
+                '_token' => csrf_token(),
+            ])
             ->assertRedirect('/');
 
         $this->assertDatabaseHas('cars', [

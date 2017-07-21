@@ -32,7 +32,7 @@ class Task1LoginTest extends DuskTestCase
             'email' => 'taylor@laravel.com',
         ]);
 
-        $this->browse(function ($browser) {
+        $this->createBrowsersFor(function ($browser) {
             $browser->visit('/login')
                 ->type('email', $this->user->email)
                 ->type('password', 'secret')

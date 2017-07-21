@@ -1,6 +1,7 @@
 <?php
 namespace App\Entity;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableInterface;
 
@@ -10,6 +11,8 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableInterface;
  */
 class User extends Authenticatable implements AuthenticatableInterface
 {
+    use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      * @var array
@@ -20,7 +23,7 @@ class User extends Authenticatable implements AuthenticatableInterface
         'is_active',
         'name',
         'email',
-        'password'
+        'password',
     ];
 
     /**

@@ -20,6 +20,9 @@
 
       <dt class="col-sm-5 col-md-3 car-field">Registration number</dt>
       <dd class="col-sm-7 col-md-9">{{ $car['registration_number'] }}</dd>
+
+      <dt class="col-sm-5 col-md-3 car-field">Mileage</dt>
+      <dd class="col-sm-7 col-md-9">{{ $car['mileage'] }}</dd>
     @endif
 
       <dt class="col-sm-5 col-md-3 car-field">Color</dt>
@@ -27,11 +30,6 @@
 
       <dt class="col-sm-5 col-md-3 car-field">Price</dt>
       <dd class="col-sm-7 col-md-9">{{ $car['price'] }}</dd>
-
-    @if ($vMode === 'show')
-      <dt class="col-sm-5 col-md-3 car-field">User</dt>
-      <dd class="col-sm-7 col-md-9">{{ $car['user']->full_name }}</dd>
-    @endif
     </dl>
   </div>
 

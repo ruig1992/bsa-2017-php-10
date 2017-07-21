@@ -106,10 +106,7 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        $data = $car->toArray();
-        $data['user'] = $car->user;
-
-        return view('cars.show', ['car' => $data]);
+        return view('cars.show', ['car' => $car->toArray()]);
     }
 
     /**

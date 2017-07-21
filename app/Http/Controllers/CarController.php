@@ -35,6 +35,8 @@ class CarController extends Controller
     ) {
         $this->userManager = $userManager;
         $this->carManager = $carManager;
+
+        $this->middleware('auth');
     }
 
     /**

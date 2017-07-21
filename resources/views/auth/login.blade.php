@@ -63,6 +63,9 @@
               Forgot Your Password?</a>
           </div>
         </div>
+
+        @include('auth.partials.social-form')
+
       </form>
     </div>
   </section>

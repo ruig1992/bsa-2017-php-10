@@ -15,7 +15,7 @@
       {{ csrf_field() }}
 
       <div class="form-group row{{ $errors->has('name') ? ' has-danger' : '' }}">
-        <label for="name" class="form-control-label col-md-4 col-form-label">Name</label>
+        <label for="name" class="form-control-label col-md-4 col-form-label text-right">Name</label>
 
         <div class="col-md-6">
           <input id="name" type="text" class="form-control{{ $errors->has('name') ?
@@ -29,7 +29,7 @@
       </div>
 
       <div class="form-group row{{ $errors->has('email') ? ' has-danger' : '' }}">
-        <label for="email" class="form-control-label col-md-4 col-form-label">E-Mail</label>
+        <label for="email" class="form-control-label col-md-4 col-form-label text-right">E-Mail</label>
 
         <div class="col-md-6">
           <input id="email" type="email" class="form-control{{ $errors->has('email') ?
@@ -43,7 +43,7 @@
       </div>
 
       <div class="form-group row{{ $errors->has('password') ? ' has-danger' : '' }}">
-        <label for="password" class="form-control-label col-md-4 col-form-label">Password</label>
+        <label for="password" class="form-control-label col-md-4 col-form-label text-right">Password</label>
 
         <div class="col-md-6">
           <input id="password" type="password" class="form-control{{ $errors->has('password') ?
@@ -56,7 +56,7 @@
       </div>
 
       <div class="form-group row{{ $errors->has('password') ? ' has-danger' : '' }}">
-        <label for="password-confirm" class="form-control-label col-md-4 col-form-label">
+        <label for="password-confirm" class="form-control-label col-md-4 col-form-label text-right">
           Confirm Password</label>
 
         <div class="col-md-6">
@@ -66,10 +66,14 @@
         </div>
       </div>
 
-      <div class="form-group mt-4">
-        <button type="submit" class="btn btn-primary">
-          <i class="fa fa-floppy-o fa-lg mr-1" aria-hidden="true"></i> Register</button>
+      <div class="form-group row mt-4">
+        <div class="offset-md-4 col-md-6">
+          <button type="submit" class="btn btn-primary">
+            <i class="fa fa-floppy-o fa-lg mr-1" aria-hidden="true"></i> Register</button>
+        </div>
       </div>
+
+      @include('auth.partials.social-form')
 
     </form>
   </div>

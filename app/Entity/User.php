@@ -1,6 +1,7 @@
 <?php
 namespace App\Entity;
 
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableInterface;
@@ -11,7 +12,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableInterface;
  */
 class User extends Authenticatable implements AuthenticatableInterface
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.

@@ -179,6 +179,7 @@ return [
 
         Laravelista\Ekko\EkkoServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
     ],
 
     /*

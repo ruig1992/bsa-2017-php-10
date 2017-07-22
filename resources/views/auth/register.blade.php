@@ -14,16 +14,30 @@
     <form method="POST" action="{{ route('register') }}">
       {{ csrf_field() }}
 
-      <div class="form-group row{{ $errors->has('name') ? ' has-danger' : '' }}">
-        <label for="name" class="form-control-label col-md-4 col-form-label text-right">Name</label>
+      <div class="form-group row{{ $errors->has('first_name') ? ' has-danger' : '' }}">
+        <label for="first_name" class="form-control-label col-md-4 col-form-label text-right">First name</label>
 
         <div class="col-md-6">
-          <input id="name" type="text" class="form-control{{ $errors->has('name') ?
-            ' form-control-danger' : '' }}" name="name"
-            value="{{ old('name') }}" autofocus>
+          <input id="first_name" type="text" class="form-control{{ $errors->has('first_name') ?
+            ' form-control-danger' : '' }}" name="first_name"
+            value="{{ old('first_name') }}" autofocus>
 
-          @if ($errors->has('name'))
-            <div class="form-control-feedback">{{ $errors->first('name') }}</div>
+          @if ($errors->has('first_name'))
+            <div class="form-control-feedback">{{ $errors->first('first_name') }}</div>
+          @endif
+        </div>
+      </div>
+
+      <div class="form-group row{{ $errors->has('last_name') ? ' has-danger' : '' }}">
+        <label for="last_name" class="form-control-label col-md-4 col-form-label text-right">Last name</label>
+
+        <div class="col-md-6">
+          <input id="last_name" type="text" class="form-control{{ $errors->has('last_name') ?
+            ' form-control-danger' : '' }}" name="last_name"
+            value="{{ old('last_name') }}" autofocus>
+
+          @if ($errors->has('last_name'))
+            <div class="form-control-feedback">{{ $errors->first('last_name') }}</div>
           @endif
         </div>
       </div>

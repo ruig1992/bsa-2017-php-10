@@ -105,7 +105,5 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
       integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
       crossorigin="anonymous"></script>
-
-    <script>"use strict";$(function(){$("#delete-form").on("submit",function(t){t.preventDefault(),confirm("Are you sure that you want to delete this car?")&&t.target.submit()})});</script>
   </body>
 </html>

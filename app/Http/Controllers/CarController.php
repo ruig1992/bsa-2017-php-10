@@ -3,15 +3,16 @@ namespace App\Http\Controllers;
 
 use App\Entity\Car;
 use Illuminate\Http\Request;
-use App\Http\Requests\ValidatedCar;
+use App\Http\Requests\StoreCar;
 
-use App\Manager\Contracts\{
-    CarManager as CarManagerContract,
-    UserManager as UserManagerContract
+use App\Managers\Contracts\{
+    CarManager,
+    UserManager
 };
-
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
+use App\Managers\Eloquent\Criteria\{
+    Latest,
+    EagerLoad, ByUser, IsActive
+};
 
 /**
  * Class CarController
@@ -20,24 +21,22 @@ use Illuminate\Support\Facades\Gate;
 class CarController extends Controller
 {
     /**
-     * @var \App\Manager\Contract\UserManager
+     * @var \App\Managers\Contracts\CarManager
      */
-    protected $userManager;
+    protected $cars;
     /**
-     * @var \App\Manager\Contract\CarManager
+     * @var \App\Managers\Contracts\UserManager
      */
-    protected $carManager;
+    protected $users;
 
     /**
-     * @param \App\Manager\Contract\UserManager $userManager
-     * @param \App\Manager\Contract\CarManager $carManager
+     * @param \App\Managers\Contracts\CarManager $cars
+     * @param \App\Managers\Contracts\UserManager $users
      */
-    public function __construct(
-        UserManagerContract $userManager,
-        CarManagerContract $carManager
-    ) {
-        $this->userManager = $userManager;
-        $this->carManager = $carManager;
+    public function __construct(CarManager $cars, UserManager $users)
+    {
+        $this->cars = $cars;
+        $this->users = $users;
 
         $this->middleware('auth');
 
@@ -53,9 +52,28 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = $this->carManager->findAll();
+        $cars = $this->cars
+            ->withCriteria(new Latest('id'))
+            ->paginate(9, ['id', 'model', 'color', 'price']);
 
-        return view('cars.index', ['cars' => $cars->toArray()]);
+        return view('cars.index', ['cars' => $cars]);
+    }
+
+    /**
+     * Gets and displays the full information about the car by its id.
+     *
+     * @param  int $id
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function show(int $id)
+    {
+        $car = $this->cars
+            //->withCriteria(new EagerLoad(['user']))
+            ->find($id);
+
+        //dd($car->toArray());
+
+        return view('cars.show', ['car' => $car->toArray()]);
     }
 
     /**
@@ -65,7 +83,7 @@ class CarController extends Controller
      */
     public function create()
     {
-        $users = $this->userManager->findAll();
+        $users = $this->users->findAllForForm();
 
         return view('cars.create', ['users' => $users]);
     }
@@ -73,14 +91,14 @@ class CarController extends Controller
     /**
      * Stores a newly created car.
      *
-     * @param \App\Http\Requests\ValidatedCar $request
-     *    Contains the rules for validating the car data from request
+     * @param \App\Http\Requests\StoreCar $request
+     *    Contains the rules for validating the car data from form request
      *
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function store(ValidatedCar $request)
+    public function store(StoreCar $request)
     {
-        $data = $request->only([
+        $this->cars->create($request->only([
             'model',
             'registration_number',
             'year',
@@ -88,36 +106,21 @@ class CarController extends Controller
             'mileage',
             'price',
             'user_id',
-        ]);
-
-        $car = new Car($data);
-        $car->save();
-        //$this->carsRepository->store($car);
-        $cars = $this->carManager->findAll();
+        ]));
 
         return redirect()->route('cars.index');
     }
 
     /**
-     * Gets and displays the full information about the car by its id.
-     *
-     * @param  \App\Entity\Car $car
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function show(Car $car)
-    {
-        return view('cars.show', ['car' => $car->toArray()]);
-    }
-
-    /**
      * Shows the form for editing the specified car by its id.
      *
-     * @param  \App\Entity\Car $car
+     * @param  int $id
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function edit(Car $car)
+    public function edit(int $id)
     {
-        $users = $this->userManager->findAll();
+        $car = $this->cars->find($id);
+        $users = $this->users->findAllForForm();
 
         return view('cars.edit', [
             'car' => $car->toArray(),
@@ -128,15 +131,15 @@ class CarController extends Controller
     /**
      * Updates the specified car by its id.
      *
-     * @param  \App\Http\Requests\ValidatedCar $request
-     *    Contains the rules for validating the car data from request
-     * @param  \App\Entity\Car $car
+     * @param  \App\Http\Requests\StoreCar $request
+     *    Contains the rules for validating the car data from form request
+     * @param  int $id
      *
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function update(ValidatedCar $request, Car $car)
+    public function update(StoreCar $request, int $id)
     {
-        $data = $request->only([
+        $this->cars->update($id, $request->only([
             'model',
             'registration_number',
             'year',
@@ -144,29 +147,21 @@ class CarController extends Controller
             'mileage',
             'price',
             'user_id',
-        ]);
+        ]));
 
-        foreach ($data as $field => $value) {
-            $car->$field = $value;
-        }
-        $car->save();
-
-        //$car = $this->carsRepository->update($car);
-
-        return redirect()->route('cars.show', ['id' => $car->id]);
+        return redirect()->route('cars.show', ['id' => $id]);
     }
 
     /**
      * Deletes the specified car by its id.
      *
-     * @param  \App\Entity\Car $car
+     * @param int $id
      *
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function destroy(Car $car)
+    public function destroy(int $id)
     {
-        $car->delete();
-        //$car = $this->carsRepository->update($car);
+        $this->cars->delete($id);
 
         return redirect()->route('cars.index');
     }

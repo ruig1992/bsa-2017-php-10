@@ -12,25 +12,18 @@
     <meta name="description" content="@yield('meta-description')">
 
     <!-- Styles -->
-    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"></head> --}}
-
     <!-- Bootstrap 4.0.0 CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
       crossorigin="anonymous">
-    <!-- Font Awesome 4.7.0 from BootstrapCDN -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet"
-      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-      crossorigin="anonymous">
 
-    <style>.noselect{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.btn:focus{background-color:transparent}.btn-primary:focus{color:#0275d8}a.btn-success:focus{color:#5cb85c}a.btn-danger:focus{color:#d9534f}.navbar-brand{font-weight:500}.cars-cards{margin-top:-1rem}.form-control-label,.car-field{font-weight:600}.form-control-feedback{font-size:.9em}
+    <style>.noselect{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.btn:focus{background-color:transparent}.btn-primary:focus{color:#0275d8}a.btn-success:focus{color:#5cb85c}a.btn-danger:focus{color:#d9534f}.main-wrapper{padding-bottom:5rem}.navbar-brand{font-weight:500}.cars-cards{margin-top:-1rem}.form-control-label,.car-field{font-weight:600}.form-control-feedback{font-size:.9em}
     </style>
   </head>
 
   <body>
-    <div id="app">
+    <div id="app" class="main-wrapper">
       {{-- <nav class="navbar navbar-default navbar-static-top"> --}}
       <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
         <!-- Collapsed Hamburger -->
@@ -98,9 +91,13 @@
       </div>
     </div>
 
-    <!-- Scripts -->
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+    <!-- Font Awesome 4.7.0 from BootstrapCDN -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous">
 
+    <!-- Scripts -->
     <!-- jQuery first, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
       integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
@@ -108,5 +105,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
       integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
       crossorigin="anonymous"></script>
+
+    <script>"use strict";$(function(){$("#delete-form").on("submit",function(t){t.preventDefault(),confirm("Are you sure that you want to delete this car?")&&t.target.submit()})});</script>
   </body>
 </html>

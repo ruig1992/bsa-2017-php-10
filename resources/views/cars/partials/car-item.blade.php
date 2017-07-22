@@ -15,11 +15,11 @@
     <dl class="row mb-0">
 
     @if ($vMode === 'show')
-      <dt class="col-sm-5 col-md-3 car-field">Year</dt>
-      <dd class="col-sm-7 col-md-9">{{ $car['year'] }}</dd>
-
       <dt class="col-sm-5 col-md-3 car-field">Registration number</dt>
       <dd class="col-sm-7 col-md-9">{{ $car['registration_number'] }}</dd>
+
+      <dt class="col-sm-5 col-md-3 car-field">Year</dt>
+      <dd class="col-sm-7 col-md-9">{{ $car['year'] }}</dd>
 
       <dt class="col-sm-5 col-md-3 car-field">Mileage</dt>
       <dd class="col-sm-7 col-md-9">{{ $car['mileage'] }}</dd>

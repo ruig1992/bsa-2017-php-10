@@ -24,6 +24,12 @@
           </div>
         @endforeach
       </div>
+
+      @if ($cars->simple)
+        {{ $cars->links('vendor.pagination.simple') }}
+      @else
+        {{ $cars->links('vendor.pagination.full') }}
+      @endif
     @endif
 
   </section>

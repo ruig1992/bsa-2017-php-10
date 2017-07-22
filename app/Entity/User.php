@@ -1,6 +1,7 @@
 <?php
 namespace App\Entity;
 
+use App\Traits\Eloquent\HasActive;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,7 +13,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableInterface;
  */
 class User extends Authenticatable implements AuthenticatableInterface
 {
-    use HasApiTokens, Notifiable;
+    use HasActive, HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -50,6 +51,15 @@ class User extends Authenticatable implements AuthenticatableInterface
     public function getFullNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * Check if the user is an Administrator.
+     * @return boolean
+     */
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
     }
 
     /**

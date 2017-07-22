@@ -36,4 +36,17 @@ class UpdateCarFields extends FormRequest
             'user_id' => 'bail|integer|exists:users,id',
         ];
     }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'user_id.integer' => 'The user must be selected.',
+            'user_id.exists' => 'The selected user does not exist.',
+        ];
+    }
 }

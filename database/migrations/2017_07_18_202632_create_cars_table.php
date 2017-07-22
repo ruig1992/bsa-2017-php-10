@@ -16,10 +16,10 @@ class CreateCarsTable extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('color')->nullable();
             $table->string('model')->nullable();
             $table->string('registration_number')->nullable();
             $table->integer('year')->nullable();
+            $table->string('color')->nullable();
             $table->integer('mileage')->nullable();
             $table->float('price', 8, 2)->nullable();
             $table->integer('user_id')->unsigned()->index()->nullable();

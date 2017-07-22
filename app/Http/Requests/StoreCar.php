@@ -33,7 +33,21 @@ class StoreCar extends FormRequest
             'color' => 'bail|required|alpha|max:255',
             'mileage' => 'bail|required|integer|min:0',
             'price' => 'bail|required|numeric|min:0',
-            'user_id' => 'bail|required|integer|exists:users,id',
+            'user_id' => 'bail|required|integer|exists:cars,user_id',
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'user_id.required' => 'The user field is required.',
+            'user_id.integer' => 'The user must be selected.',
+            'user_id.exists' => 'The selected user does not exist.',
         ];
     }
 }

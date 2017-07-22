@@ -70,6 +70,6 @@ class CarPolicy
 
     private function isAdminUser(User $user): bool
     {
-        return $user->is_admin;
+        return $user->isAdmin();
     }
 }

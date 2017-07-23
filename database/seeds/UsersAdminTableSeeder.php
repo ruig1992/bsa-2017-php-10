@@ -13,9 +13,9 @@ class UsersAdminTableSeeder extends Seeder
     public function run()
     {
         factory(User::class)->create([
-            'first_name' => 'Ruslan',
-            'last_name' => 'Danylevskyj',
-            'email' => 'ruigdan9240@gmail.com',
+            'first_name' => 'Admin',
+            'last_name' => 'Boss',
+            'email' => 'admin@example.com',
             'is_active' => true,
             'is_admin' => true,
         ]);

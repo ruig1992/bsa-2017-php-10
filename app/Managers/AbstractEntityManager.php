@@ -25,7 +25,7 @@ abstract class AbstractEntityManager implements EntityManager, CriteriaInterface
     }
 
     /**
-     * Get the Entity instance namespace for making
+     * Gets the Entity instance namespace for making.
      *
      * @return string Entity instance namespace
      */
@@ -147,7 +147,7 @@ abstract class AbstractEntityManager implements EntityManager, CriteriaInterface
     }
 
     /**
-     * Make the Entity instance by its namespace
+     * Makes the Entity instance by its namespace
      *
      * @return mixed Entity instance
      */

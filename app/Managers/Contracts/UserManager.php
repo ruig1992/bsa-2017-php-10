@@ -8,7 +8,7 @@ namespace App\Managers\Contracts;
 interface UserManager
 {
     /**
-     * Find all users for form element.
+     * Finds all users for form element.
      *
      * @param  array $columns
      * @return mixed Collection of users

@@ -8,7 +8,7 @@ namespace App\Managers\Contracts;
 interface CarManager
 {
     /**
-     * Find all cars that belongs only to active users.
+     * Finds all cars that belongs only to active users.
      *
      * @return mixed Collection of cars
      */

@@ -6,7 +6,7 @@ use App\Managers\Contracts\Criteria\CriterionInterface;
 /**
  * Class ByUser
  *
- * Find entity(ies) that belong to the specific user (by his id).
+ * Finds entity(ies) that belong to the specific user (by his id).
  *
  * @package App\Managers\Eloquent\Criteria
  */

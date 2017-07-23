@@ -8,7 +8,7 @@ namespace App\Managers\Contracts\Criteria;
 interface CriteriaInterface
 {
     /**
-     * Set the criterion to the Entity(ies) selection query.
+     * Sets the criterion to the Entity(ies) selection query.
      *
      * @param  mixed $criteria  Enumeration or criteria array
      * @return $this

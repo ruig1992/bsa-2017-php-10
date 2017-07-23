@@ -6,7 +6,7 @@ use App\Managers\Contracts\Criteria\CriterionInterface;
 /**
  * Class IsActive
  *
- * Find entity(ies) that has (have) the active state.
+ * Finds entity(ies) that has (have) the active state.
  *
  * @package App\Managers\Eloquent\Criteria
  */

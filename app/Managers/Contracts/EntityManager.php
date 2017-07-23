@@ -8,7 +8,7 @@ namespace App\Managers\Contracts;
 interface EntityManager
 {
     /**
-     * Find all entities.
+     * Finds all entities.
      *
      * @param  array $columns
      * @return mixed Collection of entities
@@ -16,16 +16,17 @@ interface EntityManager
     public function findAll(array $columns = ['*']);
 
     /**
-     * Find the entity by its primary key.
+     * Finds the entity by its primary key.
      *
      * @param  mixed $id
      * @param  array $columns
+     *
      * @return mixed Entity
      */
     public function find($id, array $columns = ['*']);
 
     /**
-     * Find entities with where clause to the query.
+     * Finds entities with where clause to the query.
      *
      * @param  string|array|\Closure  $column
      * @param  string  $operator
@@ -42,7 +43,7 @@ interface EntityManager
     );
 
     /**
-     * Find only first entity with where clause to the query.
+     * Finds only the first entity with where clause to the query.
      *
      * @param  string|array|\Closure  $column
      * @param  string  $operator
@@ -59,7 +60,7 @@ interface EntityManager
     );
 
     /**
-     * Find entities with pagination.
+     * Finds entities with pagination.
      *
      * @param int $perPage
      * @param array $columns
@@ -78,7 +79,7 @@ interface EntityManager
     );
 
     /**
-     * Create a new entity.
+     * Creates a new entity.
      *
      * @param  array $properties
      * @return mixed Created Entity
@@ -86,7 +87,7 @@ interface EntityManager
     public function create(array $properties);
 
     /**
-     * Update the entity.
+     * Updates the entity.
      *
      * @param  mixed $id
      * @param  array $properties
@@ -95,7 +96,7 @@ interface EntityManager
     public function update($id, array $properties): bool;
 
     /**
-     * Delete the entity.
+     * Deletes the entity.
      *
      * @param  mixed $id
      * @return bool

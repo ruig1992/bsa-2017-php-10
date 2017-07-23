@@ -6,7 +6,7 @@ use App\Managers\Contracts\Criteria\CriterionInterface;
 /**
  * Class EagerLoad
  *
- * Set the relationships that should be eager loaded.
+ * Sets the relationships that should be eager loaded.
  *
  * @package App\Managers\Eloquent\Criteria
  */

@@ -8,7 +8,7 @@ namespace App\Managers\Contracts\Criteria;
 interface CriterionInterface
 {
     /**
-     * Apply the specified criterion to the Entity(ies) selection query.
+     * Applies the specified criterion to the Entity(ies) selection query.
      *
      * @param  mixed $entity
      * @return mixed

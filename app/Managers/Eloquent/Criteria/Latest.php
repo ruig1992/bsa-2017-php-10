@@ -6,7 +6,7 @@ use App\Managers\Contracts\Criteria\CriterionInterface;
 /**
  * Class Latest
  *
- * Find last entities by the specific column
+ * Finds last entities by the specific column
  * (the default is the entity creation time).
  *
  * @package App\Managers\Eloquent\Criteria

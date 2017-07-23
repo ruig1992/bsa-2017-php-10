@@ -3,7 +3,7 @@
 use App\Entity\Car;
 use Illuminate\Database\Seeder;
 
-class CarsTableSeeder.php extends Seeder
+class CarsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

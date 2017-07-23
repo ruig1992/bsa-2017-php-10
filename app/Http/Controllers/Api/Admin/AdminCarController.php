@@ -1,19 +1,13 @@
 <?php
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Entity\Car;
-
-use App\Http\Requests\StoreCar;
-use App\Http\Requests\UpdateCarFields;
-
-use App\Manager\Contracts\{
-    CarManager as CarManagerContract,
-    UserManager as UserManagerContract
+use App\Fractal\{
+    Contracts\CarFractal,
+    Transformers\CarTransformer
 };
-
 use App\Http\Controllers\Controller;
+use App\Managers\Contracts\CarManager;
 use Illuminate\Http\{Request, JsonResponse};
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AdminCarController
@@ -22,72 +16,72 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminCarController extends Controller
 {
     /**
-     * @var \App\Manager\Contract\UserManager
+     * @var \App\Managers\Contracts\CarManager
      */
-    protected $userManager;
+    protected $cars;
     /**
-     * @var \App\Manager\Contract\CarManager
+     * @var \App\Fractal\Contracts\CarFractal
      */
-    protected $carManager;
+    protected $fractal;
 
     /**
-     * @param \App\Manager\Contract\UserManager $userManager
-     * @param \App\Manager\Contract\CarManager $carManager
+     * @param \App\Managers\Contracts\CarManager $cars
+     * @param \App\Fractal\Contracts\CarFractal $fractal
      */
-    public function __construct(
-        UserManagerContract $userManager,
-        CarManagerContract $carManager
-    ) {
-        $this->userManager = $userManager;
-        $this->carManager = $carManager;
+    public function __construct(CarManager $cars, CarFractal $fractal)
+    {
+        $this->cars = $cars;
+        $this->fractal = $fractal->setEntityManager($this->cars);
 
-        $this->middleware('auth:api');
         $this->middleware('can:cars.view')->only(['index', 'show']);
         $this->middleware('can:cars.create')->only(['store']);
-        $this->middleware('can:cars.update,car')->only(['update']);
-        $this->middleware('can:cars.delete,car')->only(['destroy']);
+        $this->middleware('can:cars.update')->only(['update']);
+        $this->middleware('can:cars.delete')->only(['destroy']);
     }
 
     /**
      * Gets and displays the list of all cars.
      *
-     * @return JsonResponse
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request): JsonResponse
     {
-        $cars = $this->carManager->findAll();
+        $cars = $this->fractal
+            ->setTransformer(CarTransformer::class)
+            ->collection($request->only([
+                'per_page', 'include'
+            ]));
 
-        return response()->json($cars);
+        return response()->json($cars->toArray());
     }
 
     /**
      * Gets and displays the full information about the car by its id.
      *
-     * @param  \App\Entity\Car $car
-     * @return JsonResponse
+     * @param \Illuminate\Http\Request $request
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Car $car): JsonResponse
+    public function show(Request $request, int $id): JsonResponse
     {
-        $data = fractal()
-            ->item($car)
-            ->parseIncludes(['user'])
-            ->transformWith(new CarTransformer())
-            ->toArray();
+        $car = $this->fractal
+            ->setTransformer(CarTransformer::class)
+            ->item($id, $request->only(['include']));
 
-        return response()->json($data);
+        return response()->json($car->toArray());
     }
 
     /**
-     * Store a newly created car.
+     * Stores a newly created car.
      *
-     * @param \App\Http\Requests\StoreCar $request
-     *    Contains the rules for validating the car data from request
-     *
-     * @return void
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreCar $request): void //JsonResponse
+    public function store(Request $request): JsonResponse
     {
-        $data = $request->only([
+        $car = $this->cars->create($request->only([
             'model',
             'registration_number',
             'year',
@@ -95,25 +89,22 @@ class AdminCarController extends Controller
             'mileage',
             'price',
             'user_id',
-        ]);
+        ]));
 
-        $car = new Car($data);
-        $car->save();
-        //$this->carsRepository->store($car);
-        //$cars = $this->carManager->findAll();
-
-        //return response()->json($cars);
+        return response()->json($car->toArray());
     }
 
     /**
      * Updates the specified car by its id.
      *
-     * @param  \App\Entity\Car $car
-     * @return JsonResponse
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UpdateCarFields $request, Car $car): JsonResponse
+    public function update(Request $request, int $id): JsonResponse
     {
-        $data = $request->only([
+        $this->cars->update($id, $request->only([
             'model',
             'registration_number',
             'year',
@@ -121,28 +112,21 @@ class AdminCarController extends Controller
             'mileage',
             'price',
             'user_id',
-        ]);
+        ]));
 
-        foreach ($data as $field => $value) {
-            if ($value !== null) {
-                $car->$field = $value;
-            }
-        }
-        $car->save();
+        $car = $this->cars->find($id);
 
-        //$car = $this->carsRepository->update($car);
-
-        return response()->json($car);
+        return response()->json($car->toArray());
     }
 
     /**
      * Deletes the specified car by its id.
      *
-     * @param  \App\Entity\Car $car
+     * @param  int $id
      * @return void
      */
-    public function destroy(Car $car): void
+    public function destroy(int $id): void
     {
-        $car->delete();
+        $this->cars->delete($id);
     }
 }

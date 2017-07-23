@@ -16,7 +16,7 @@ class CarPolicy
     /**
      * Determine whether the user can view the car.
      *
-     * @param  \App\Entity\User $user
+     * @param \App\Entity\User $user
      * @return bool
      */
     public function view(User $user): bool
@@ -27,7 +27,7 @@ class CarPolicy
     /**
      * Determine whether the user can create cars.
      *
-     * @param  \App\Entity\User $user
+     * @param \App\Entity\User $user
      * @return bool
      */
     public function create(User $user): bool
@@ -38,10 +38,12 @@ class CarPolicy
     /**
      * Determine whether the user can update the car.
      *
-     * @param  \App\Entity\User $user
+     * @param \App\Entity\User $user
+     * @param \App\Entity\Car|null $car
+     *
      * @return bool
      */
-    public function update(User $user): bool
+    public function update(User $user, Car $car = null): bool
     {
         return $this->isAdminUser($user);
     }
@@ -49,25 +51,22 @@ class CarPolicy
     /**
      * Determine whether the user can delete the car.
      *
-     * @param  \App\Entity\User $user
+     * @param \App\Entity\User $user
+     * @param \App\Entity\Car|null $car
+     *
      * @return bool
      */
-    public function delete(User $user): bool
+    public function delete(User $user, Car $car = null): bool
     {
         return $this->isAdminUser($user);
     }
 
     /**
-     * [isUsersCar description].
-     * @param  \App\Entity\User $user
-     * @param  \App\Entity\Car  $car
+     * Determine whether the user is an administrator.
+     *
+     * @param \App\Entity\User $user
      * @return bool
      */
-    private function isUsersCar(User $user, Car $car): bool
-    {
-        return $car->user_id === $user->id;
-    }
-
     private function isAdminUser(User $user): bool
     {
         return $user->isAdmin();

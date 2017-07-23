@@ -1,15 +1,13 @@
 <?php
 namespace App\Http\Controllers\Api;
 
-use App\Entity\Car;
-use App\Manager\Contracts\{
-    CarManager as CarManagerContract,
-    UserManager as UserManagerContract
+use App\Fractal\{
+    Contracts\CarFractal,
+    Transformers\CarTransformer
 };
 use App\Http\Controllers\Controller;
+use App\Managers\Contracts\CarManager;
 use Illuminate\Http\{Request, JsonResponse};
-
-use App\Transformers\CarTransformer;
 
 /**
  * Class CarController
@@ -18,59 +16,55 @@ use App\Transformers\CarTransformer;
 class CarController extends Controller
 {
     /**
-     * @var \App\Manager\Contract\UserManager
+     * @var \App\Managers\Contracts\CarManager
      */
-    protected $userManager;
+    protected $cars;
     /**
-     * @var \App\Manager\Contract\CarManager
+     * @var \App\Fractal\Contracts\CarFractal
      */
-    protected $carManager;
+    protected $fractal;
 
     /**
-     * @param \App\Manager\Contract\UserManager $userManager
-     * @param \App\Manager\Contract\CarManager $carManager
+     * @param \App\Managers\Contracts\CarManager $cars
+     * @param \App\Fractal\Contracts\CarFractal $fractal
      */
-    public function __construct(
-        UserManagerContract $userManager,
-        CarManagerContract $carManager
-    ) {
-        $this->userManager = $userManager;
-        $this->carManager = $carManager;
-
-        $this->middleware('auth:api');
+    public function __construct(CarManager $cars, CarFractal $fractal)
+    {
+        $this->cars = $cars;
+        $this->fractal = $fractal->setEntityManager($this->cars);
     }
 
     /**
-     * Gets and displays the list of all cars with certain data fields.
+     * Gets and displays the list of all cars.
      *
-     * @return JsonResponse
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request): JsonResponse
     {
-        $fields = ['id', 'model', 'year', 'color', 'price',];
-        $data = [];
+        $cars = $this->fractal
+            ->setTransformer(CarTransformer::class)
+            ->collection($request->only([
+                'per_page', 'include'
+            ]));
 
-        foreach ($this->carManager->findAll() as $car) {
-            $data[] = array_only($car->toArray(), $fields);
-        }
-
-        return response()->json($data);
+        return response()->json($cars->toArray());
     }
 
     /**
      * Gets and displays the full information about the car by its id.
      *
-     * @param  \App\Entity\Car $car
-     * @return JsonResponse
+     * @param \Illuminate\Http\Request $request
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Car $car): JsonResponse
+    public function show(Request $request, int $id): JsonResponse
     {
-        $data = fractal()
-            ->item($car)
-            ->parseIncludes(['user'])
-            ->transformWith(new CarTransformer())
-            ->toArray();
+        $car = $this->fractal
+            ->setTransformer(CarTransformer::class)
+            ->item($id, $request->only(['include']));
 
-        return response()->json($data);
+        return response()->json($car->toArray());
     }
 }

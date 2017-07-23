@@ -24,7 +24,7 @@ class EntityManagerServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // method body
     }
 
     /**

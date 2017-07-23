@@ -13,7 +13,7 @@
     <div class="container">
       @include('cars.partials.car-form', [
         'action' => route('cars.update', ['id' => $car['id']]),
-        'method' => 'PATCH',
+        'method' => 'PUT',
       ])
     </div>
 </section>

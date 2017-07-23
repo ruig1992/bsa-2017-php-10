@@ -15,12 +15,12 @@ class EagerLoad implements CriterionInterface
     /**
      * @var array
      */
-    protected $relations;
+    protected $relations = [];
 
     /**
      * @param array $relations
      */
-    public function __construct(array $relations)
+    public function __construct(array $relations = [])
     {
         $this->relations = $relations;
     }

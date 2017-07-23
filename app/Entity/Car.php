@@ -22,13 +22,22 @@ class Car extends Model
      * @var array
      */
     protected $fillable = [
-        'color',
         'model',
         'registration_number',
         'year',
+        'color',
         'mileage',
         'price',
         'user_id',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'price' => 'float',
     ];
 
     /**

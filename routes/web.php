@@ -27,6 +27,7 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('app.index');
+
 Route::resource('cars', 'CarController');
 
 Route::get('/auth/{provider}', 'Auth\SocialAuthController@redirectToProvider');

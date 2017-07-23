@@ -17,12 +17,12 @@ class CreateCarsTable extends Migration
             $table->increments('id');
 
             $table->string('model')->nullable();
-            $table->string('registration_number')->nullable();
-            $table->integer('year')->nullable();
+            $table->char('registration_number', 6)->nullable();
             $table->string('color')->nullable();
-            $table->integer('mileage')->nullable();
-            $table->float('price', 8, 2)->nullable();
-            $table->integer('user_id')->unsigned()->index()->nullable();
+            $table->integer('year')->unsigned()->nullable();
+            $table->integer('mileage')->unsigned()->nullable();
+            $table->decimal('price', 10, 2)->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable()->index();
 
             $table->foreign('user_id')
                 ->references('id')

@@ -2,7 +2,6 @@
 namespace App\Entity;
 
 use App\Traits\Eloquent\HasActive;
-use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableInterface;
@@ -13,10 +12,11 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableInterface;
  */
 class User extends Authenticatable implements AuthenticatableInterface
 {
-    use HasActive, HasApiTokens, Notifiable;
+    use HasActive, Notifiable;
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = [
@@ -25,10 +25,12 @@ class User extends Authenticatable implements AuthenticatableInterface
         'email',
         'password',
         'is_active',
+        'is_admin',
     ];
 
     /**
      * The attributes that should be hidden.
+     *
      * @var array
      */
     protected $hidden = [
@@ -37,6 +39,7 @@ class User extends Authenticatable implements AuthenticatableInterface
 
     /**
      * The attributes that should be cast to native types.
+     *
      * @var array
      */
     protected $casts = [
@@ -46,6 +49,7 @@ class User extends Authenticatable implements AuthenticatableInterface
 
     /**
      * Get the full name of the user.
+     *
      * @return string
      */
     public function getFullNameAttribute(): string
@@ -55,6 +59,7 @@ class User extends Authenticatable implements AuthenticatableInterface
 
     /**
      * Check if the user is an Administrator.
+     *
      * @return boolean
      */
     public function isAdmin(): bool

@@ -1,18 +1,16 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Entity\Car;
-use Illuminate\Http\Request;
-use App\Http\Requests\StoreCar;
-
 use App\Managers\Contracts\{
     CarManager,
     UserManager
 };
 use App\Managers\Eloquent\Criteria\{
     Latest,
-    EagerLoad, ByUser, IsActive
+    EagerLoad
 };
+use App\Http\Requests\StoreCar;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class CarController
@@ -39,10 +37,7 @@ class CarController extends Controller
         $this->users = $users;
 
         $this->middleware('auth');
-
         $this->middleware('can:cars.create')->only(['create', 'store']);
-        $this->middleware('can:cars.update,car')->only(['edit', 'update']);
-        $this->middleware('can:cars.delete,car')->only(['destroy']);
     }
 
     /**
@@ -54,7 +49,7 @@ class CarController extends Controller
     {
         $cars = $this->cars
             ->withCriteria(new Latest('id'))
-            ->paginate(9, ['id', 'model', 'color', 'price']);
+            ->paginate(6, ['id', 'model', 'color', 'price']);
 
         return view('cars.index', ['cars' => $cars]);
     }
@@ -67,11 +62,7 @@ class CarController extends Controller
      */
     public function show(int $id)
     {
-        $car = $this->cars
-            //->withCriteria(new EagerLoad(['user']))
-            ->find($id);
-
-        //dd($car->toArray());
+        $car = $this->cars->find($id);
 
         return view('cars.show', ['car' => $car->toArray()]);
     }
@@ -120,6 +111,9 @@ class CarController extends Controller
     public function edit(int $id)
     {
         $car = $this->cars->find($id);
+
+        $this->authorize('cars.update', $car);
+
         $users = $this->users->findAllForForm();
 
         return view('cars.edit', [
@@ -139,6 +133,8 @@ class CarController extends Controller
      */
     public function update(StoreCar $request, int $id)
     {
+        $this->authorize('cars.update');
+
         $this->cars->update($id, $request->only([
             'model',
             'registration_number',
@@ -161,6 +157,8 @@ class CarController extends Controller
      */
     public function destroy(int $id)
     {
+        $this->authorize('cars.delete');
+
         $this->cars->delete($id);
 
         return redirect()->route('cars.index');

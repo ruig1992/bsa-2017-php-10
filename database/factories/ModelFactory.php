@@ -21,19 +21,18 @@ $factory->define(App\Entity\User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
-        'is_active' => $faker->boolean,
         'is_admin' => false,
     ];
 });
 
 $factory->define(App\Entity\Car::class, function (Faker\Generator $faker) {
     return [
-        'color' => $faker->colorName,
         'model' => $faker->company,
-        'registration_number' => strtoupper(str_random(6)),
+        'registration_number' => str_random(6),
         'year' => $faker->year,
-        'mileage' => $faker->randomDigit,
-        'price' => $faker->randomDigit,
-        //'user_id' => 1,
+        'color' => $faker->colorName,
+        'mileage' => $faker->numberBetween($min = 100, $max = 1000),
+        'price' => $faker->randomFloat(2, 10000.00, 9999999.99),
+        'user_id' => 1,
     ];
 });

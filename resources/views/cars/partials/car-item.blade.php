@@ -47,7 +47,8 @@
 
       <form id="delete-form" action="{{ route('cars.destroy', ['id' => $car['id']]) }}"
         method="POST" style="display:none">
-        {{ method_field('DELETE') }}{{ csrf_field() }}</form>
+          {{ method_field('DELETE') }}
+          {{ csrf_field() }}</form>
       @endcan
     </div>
   @endif

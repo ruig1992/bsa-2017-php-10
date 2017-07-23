@@ -1,12 +1,12 @@
 <?php
-namespace App\Transformers;
+namespace App\Fractal\Transformers;
 
 use App\Entity\Car;
 use League\Fractal\TransformerAbstract;
 
 /**
  * Class CarTransformer
- * @package App\Transformers
+ * @package App\Fractal\Transformers
  */
 class CarTransformer extends TransformerAbstract
 {
@@ -16,8 +16,9 @@ class CarTransformer extends TransformerAbstract
     protected $availableIncludes = ['user'];
 
     /**
-     * [transform description].
-     * @param  Car $car
+     * Fractal transform the Car data.
+     *
+     * @param \App\Entity\Car $car
      * @return array
      */
     public function transform(Car $car): array
@@ -34,8 +35,9 @@ class CarTransformer extends TransformerAbstract
     }
 
     /**
-     * [includeUser description].
-     * @param  Car $car
+     * Include the User data.
+     *
+     * @param \App\Entity\Car $car
      * @return \League\Fractal\Resource\Item
      */
     public function includeUser(Car $car)

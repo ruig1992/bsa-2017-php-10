@@ -13,10 +13,12 @@ class UsersCarsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 5)->create()->each(function($u) {
-            $u->cars()->save(factory(Car::class)->make());
-            $u->cars()->save(factory(Car::class)->make());
-            $u->cars()->save(factory(Car::class)->make());
+        $maxCars = 3;
+
+        factory(User::class, 5)->create()->each(function($u) use ($maxCars) {
+            for ($i = 0; $i < random_int(0, $maxCars); $i++) {
+                $u->cars()->save(factory(Car::class)->make());
+            }
         });
     }
 }

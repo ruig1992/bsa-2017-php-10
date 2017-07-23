@@ -1,18 +1,19 @@
 <?php
-namespace App\Transformers;
+namespace App\Fractal\Transformers;
 
 use App\Entity\User;
 use League\Fractal\TransformerAbstract;
 
 /**
  * Class UserTransformer
- * @package App\Transformers
+ * @package App\Fractal\Transformers
  */
 class UserTransformer extends TransformerAbstract
 {
     /**
-     * [transform description].
-     * @param  User $user
+     * Fractal transform the Car data.
+     *
+     * @param \App\Entity\User $user
      * @return array
      */
     public function transform(User $user): array

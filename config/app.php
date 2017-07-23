@@ -178,10 +178,10 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\EntityManagerServiceProvider::class,
+        App\Providers\FractalServiceProvider::class,
 
         Laravelista\Ekko\EkkoServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
-        Laravel\Passport\PassportServiceProvider::class,
         Spatie\Fractal\FractalServiceProvider::class,
     ],
 

@@ -1,75 +1,94 @@
-# Домашнее задание
-## Подготовка
-1. Склонировать репозиторий с тестами: https://github.com/BinaryStudioAcademy/bsa-2017-php-10
-2. Взять результат выполнения предыдущей домашней работы (Models).
-3. Подключить REST API из соответствующего домашнего задания
-    1. Привести набор полей в соответствие с ДЗ models.
-    2. Использовать manager из ДЗ Models.
-    3. Расположить контроллеры в подпапке Api.
-4. Подключить страницы из домашнего задания по Views and Forms.
-    - Для форм создания и редактирования машины нужно будет добавить select с пользователями.
-5. Создать по роуту “/” главную страницу, содержащую текст: Best Car Hire Deals.
+# BSA Task :: "Car Hire Deals"
 
-## Задание 1
-Добавить возможность регистрации новых пользователей и аутентификации с помощью email и password.
+## Before install
+
+Attention! Before you start, make sure that you have a working environment:
+ - PHP 7.1 (http://php.net/)
+ - MySQL Database (https://www.mysql.com/). Create your database _"your_database_name"_ if you want.
+ - Composer (https://getcomposer.org/)
+
+Recommended to use Vagrant and the virtual machine Homestead.  
+Read more here: https://laravel.com/docs/5.4/homestead
+
+## Install
     
-1. Сгенерировать командой основные файлы
-2. Расширить класс App\Entity\User
-3. Адаптировать стандартные форму и контроллер под набор полей
-4. После аутентификации показывать пользователю страницу со списком 	машин.
-5. Закрыть доступ ко всем страницам кроме главной для пользователей, не прошедших аутентификацию.
+1. Clone or download this repository
+   ```bash
+   git clone git@github.com:ruig1992/bsa-2017-php-10.git
+   ```
+2. Install project dependencies
+   ```bash
+   path/to/project/$ sudo composer install
+   ```
+3. Check file _.env_ in the root directory and put database settings, if you created it
+   ```bash
+   DB_CONNECTION = mysql
+   DB_HOST = your host
+   DB_PORT=3306
+   DB_DATABASE = "your_database_name"
+   DB_USERNAME = "your_username"
+   DB_PASSWORD = "your_password"
+   ```
+4. Generate the new Laravel application key
+   ```bash
+   path/to/project/$ php artisan key:generate
+   ```
+5. Make database migration and fill database by data
+   ```bash
+   path/to/project/$ php artisan migrate --seed
+   ```
+6. You can browse the project on ```http://localhost:8000```
 
-## Задание 2
-Добавить возможность аутентификации через социальную сеть или сервис, например, Фейсбук (Socialite, SocialiteProviders, etc.)
-Для этого нужно будет зарегистрировать приложение на используемом ресурсе и использовать предоставленные ключи внутри Laravel приложения.
+***
 
-## Задание 3
-Реализовать механизм авторизации с помощью ролей. 
-- Ролей должно быть 2: обычный пользователь и администратор. 
-- Для хранения роли нужно создать миграцию для таблицы [users]: добавить флаг is_admin.
-- Права доступа:
-    1. Для страниц приложения:
-        - Пользователь должен иметь доступ к страницам списка машин и отдельной машины.
-        - Пользователь не должен видеть контролы для редактирования, удаления и добавления машины.
-        - Пользователь не должен иметь доступа к соответствующим роутам.
-        - Администратор должен видеть контролы для редактирования, удаления и добавления машины и иметь доступ к соответствующим роутам.
-        - В случае попытки неавторизованного доступа - перенаправлять на главную (/).
-    1. Для API: 
-        - Роуты /api/cars должны быть доступны для всех аутентифицированых пользователей.
-        - Действия роутов  /api/admin/cars/ должны быть доступны только для администратора. 
-        - В случае попытки неавторизованного доступа - возвращать response с кодом 403.
-- Контроль прав доступа нужно было реализовать в классах Policy так, чтобы каждому классу модели соответствовала своя Policy.
-- Реализованные полиси должны описывать доступ к действиям пользователя (например, post.create), а не наличие роли администратора. Проверка критерия предоставления доступа (в нашем случае - роли) должна происходить в методах класса полиси. То есть в контроллерах в итоге должна быть проверка типа
+## Browser Usage
 
-    ```
-    if (Gate::denies(‘create', $post)) ...
-    ```
+For **login** to the system there are test users by default:
+ - **common** (email - ```test@example.com```, password - ```secret```)
+ - **admin** (email - ```admin@example.com```, password - ```secret```)
+   
+**Common users, _unlike administrators_, can not modify content** (add new, change, delete cars). 
+
+You can **register** in the system as a common user using the **form** or **social networks (services)**.
+
+For the second case, you need to edit the end of the ```.env``` file - enter ```..._CLIENT_ID``` and ```..._CLIENT_SECRET``` for all necessary services (now available _GitHub, Bitbucket, Facebook, Twitter, Google, LinkedIn_).
     
-    вместо
+You can get ```..._CLIENT_ID``` and ```..._CLIENT_SECRET``` after registering your applications (accounts) in social services.
     
-    ```
-    if (Gate::denies(‘isAdmin', $post)) …
-    ```
+For example:
+       
+   https://github.com/               for GitHub,  
+   https://developers.facebook.com/  for Facebook,  
+   https://apps.twitter.com/         for Twitter  
 
-## Дополнительно
-Если все успеете, в README проекта вместо задания добавьте полную инструкцию по развертыванию проекта и запуску тестов.
+***
 
-## Запуск тестов
-1. Создайте APP_URL в .env
-2. Запустите тесты
+## API Usage
 
-    ```
-    php artisan dusk
-    ```
-    
-- см. https://laravel.com/docs/5.4/dusk
-### Запуск тестов c Homestead
-1. Зайдите на виртуальную машину через ssh из папки, где установлен Homestead
-    ```
-    vagrant ssh
-    ```
-2. Запустите следующие команды перед запуском тестов
-    ```
+There are 2 routes:
+  - ```/api/cars``` and ```/api/cars/{car_id}``` - for all authentificated users  
+  - ```/api/admin/cars``` and ```/api/admin/cars/{car_id}``` - for only administrators  
+  
+You can specify advanced parameters for routes, such as:
+  - ```per_page={number}``` - the number of records (_cars_, in this case) per one request (page) 
+  - ```include={entity_data_1,entity_data_2,...,entity_data_N}``` - the sequence through the comma of entities whose data is displayed in the query (for cars ```?include=user``` displays the information about the user of this car)
+
+## Running the tests
+   ```bash
+   path/to/project/$ ./vendor/bin/phpunit
+   
+   path/to/project/$ php artisan dusk
+   ```
+   
+- read more https://laravel.com/docs/5.4/dusk
+
+### Running the tests from Homestead (for Laravel Dusk)
+1. Go to the virtual machine via ssh from the folder where Homestead is installed
+   ```bash
+   vagrant ssh
+   ```
+2. Run the following commands before running the tests
+    ```bash
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
     
     sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
@@ -78,22 +97,15 @@
     
     sudo apt-get install -y xvfb
     ```
-
-3. В отдельном окне терминала: 
-    ```
+    
+3. In a separate terminal window:
+    ```bash
     Xvfb :0 -screen 0 1280x960x24 &
     ```
 
-4. Теперь можно запустить тесты.
-    ```
+4. Now you can run the tests
+    ```bash
     php artisan dusk
     ```
 
-- см. https://github.com/laravel/dusk/issues/50#issuecomment-275155974
-
-## Система оценивания
-Все тесты должны проходить. Тесты менять нельзя.
-Каждое из заданий оценивается в 3 балла.
-
-Примеры из лекции доступны здесь: https://github.com/Antarus66/Auth-samples
-
+- read more https://github.com/laravel/dusk/issues/50#issuecomment-275155974

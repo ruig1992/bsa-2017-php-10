@@ -7,7 +7,8 @@ Attention! Before you start, make sure that you have a working environment:
  - MySQL Database (https://www.mysql.com/). Create your database _"your_database_name"_ if you want.
  - Composer (https://getcomposer.org/)
 
-Recommended to use Vagrant and the virtual machine Homestead. Read more here: https://laravel.com/docs/5.4/homestead
+Recommended to use Vagrant and the virtual machine Homestead.  
+Read more here: https://laravel.com/docs/5.4/homestead
 
 ## Install
     
